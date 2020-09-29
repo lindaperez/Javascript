@@ -168,8 +168,16 @@ select {
     cursor: pointer;
 }
 
+
+
 /* Footer */
 .fine-print {
     display: block;
     font-size: 0.7em;
 }
+
+button#btn2 {
+    background: #ccc;
+
+}
+

@@ -79,25 +79,25 @@ function Individual(w,f,i,d) {
 
 // Create Dino Compare Method 2
 // NOTE: Weight in JSON file is in lbs, height in inches.
-Dino.prototype.compareHeight = function () {
-    let fact;
-    if (this.height > (human.height.feet * 12 + human.height.inches)) {
-        fact = this.species + ' are higher than ' + human.name;
-    } else {
-        fact = human.name + ' is higher than ' + this.species;
-    }
-    return fact;
-}
+ Dino.prototype.compareHeight = function () {
+     let fact;
+     if (this.height > (human.height.feet * 12 + human.height.inches)) {
+         fact = this.species + ' are higher than ' + human.name;
+     } else {
+         fact = human.name + ' is higher than ' + this.species;
+     }
+     return fact;
+ }
 
  // Create Dino Compare Method 3
  // NOTE: Weight in JSON file is in lbs, height in inches.
-Dino.prototype.compareDiet = function () {
+ Dino.prototype.compareDiet = function () {
      let fact;
      if (this.diet.toLowerCase() === human.diet.toLowerCase()) {
          if (this.diet === 'herbabor') {
              fact = this.species + ' are herbavors like you ' + human.name;
          } else {
-             fact = human.name + ' are carnivors like you' + this.species;
+             fact = human.name + ' are carnivors like ' + this.species;
          }
      } else {
          fact = 'Unlike you ' + this.species + ' are ' + this.diet + '.'
@@ -155,20 +155,7 @@ Dino.prototype.compareDiet = function () {
              img.setAttribute('alt', "Human description");
              item.appendChild(img)
 
-             let weight = document.createElement("H4");                // Create a <h1> element
-             let weightText = document.createTextNode("Weight: " + human.weight); // Create a text node
-             weight.appendChild(weightText);
-             item.appendChild(weight)
 
-             let height = document.createElement("h4")
-             let heightText = document.createTextNode("Height: " + ((human.height.feet * 12) + human.height.inches)); // Create a text node
-             height.appendChild(heightText)
-             item.appendChild(height)
-
-             let diet = document.createElement("h3")
-             let dietText = document.createTextNode("Diet: "+human.diet); // Create a text node
-             diet.appendChild(dietText)
-             item.appendChild(diet)
 
          }
 
@@ -177,23 +164,33 @@ Dino.prototype.compareDiet = function () {
 
 
 //@description: used to set form with default values
-let defaultValues = (function() {
+ let defaultFormValues = function() {
      document.getElementById("name").setAttribute("placeholder", "Introduzca su nombre");
      document.getElementById("feet").setAttribute("placeholder", '0');
      document.getElementById("inches").setAttribute("placeholder", '0');
      document.getElementById("weight").setAttribute("placeholder", '0');
- })();
+ };
+ let cleanFormValues = function(){
+
+     document.getElementById("name").value= "";
+     document.getElementById("feet").value= "";
+     document.getElementById("inches").value= "";
+     document.getElementById("weight").value= "";
+     document.getElementById("diet").getElementsByTagName('option')[0].selected=true;
+
+
+
+
+ }
 
 //Object Human
  const human = new Human();
 
-
-//@description: used to extract Json data and display it
  function extractDrawJsonData () {
      let promise = import("./data.js")
          .then(data => {
              let dinosList = data['Data'][0]['Dinos']
-             console.log(dinosList)
+
 
              // fill pigeon data
              for (let i = 0; i < 8; i++) {
@@ -203,7 +200,6 @@ let defaultValues = (function() {
  }
 
 
-//@description: used to draw dino data at Dom
  function drawDinoData (d,id) {
      //Pigeon
      let item = document.getElementById(id + "-dino")
@@ -217,21 +213,21 @@ let defaultValues = (function() {
      img.setAttribute('alt', d[id].species.toLowerCase() + " details");
      item.appendChild(img)
 
-     let height = document.createElement("h4")
-     let heightText = document.createTextNode("Height: " + d[id].height + " inches"); // Create a text node
-     height.appendChild(heightText)
+     //let height = document.createElement("h4")
+     //let heightText = document.createTextNode("Height: " + d[id].height + " inches"); // Create a text node
+     //height.appendChild(heightText)
 
-     let weight = document.createElement("h4")
-     let weightText = document.createTextNode("Weight: " + d[id].weight + " lb"); // Create a text node
-     weight.appendChild(weightText)
+     //let weight = document.createElement("h4")
+     //let weightText = document.createTextNode("Weight: " + d[id].weight + " lb"); // Create a text node
+     //weight.appendChild(weightText)
 
-     let diet = document.createElement("h3")
-     let dietText = document.createTextNode("Diet: " + d[id].diet); // Create a text node
-     diet.appendChild(dietText)
+     //let diet = document.createElement("h3")
+     //let dietText = document.createTextNode("Diet: " + d[id].diet); // Create a text node
+     //diet.appendChild(dietText)
 
-     let whenWhere = document.createElement("h5")
-     let whenWhereText = document.createTextNode("When: " + d[id].when + " Where: " + d[id].where); // Create a text node
-     whenWhere.appendChild(whenWhereText)
+     //let whenWhere = document.createElement("h5")
+     //let whenWhereText = document.createTextNode("When: " + d[id].when + " Where: " + d[id].where); // Create a text node
+     //whenWhere.appendChild(whenWhereText)
 
      //Choosing the fact
      let fact = document.createElement("h3")
@@ -239,6 +235,9 @@ let defaultValues = (function() {
 
      let optionFact = Math.floor(Math.random() * 4);
      switch (optionFact) {
+         case 0:
+             factText = document.createTextNode(d[id].fact);
+             break;
          case 1:
              factText = document.createTextNode(Dino.prototype.compareWeight.call(d[id]))
              break;
@@ -247,23 +246,24 @@ let defaultValues = (function() {
              break;
          case 3:
              factText = document.createTextNode(Dino.prototype.compareDiet.call(d[id]))
+             break;
+         case 4:
+             factText = document.createTextNode(d[id].when)
+             break;
+         case 5:
+             factText = document.createTextNode(d[id].where)
+             break;
 
-             break;
-         case 0:
-             factText = document.createTextNode("Fact: " + d[id].fact);
-             break;
      }
      if (d[id].species==='Pigeon') {
-         factText = document.createTextNode("Fact: " + "All birds are Dinosaurs.");
+         factText = document.createTextNode("All birds are Dinosaurs.");
      }
 
 
      fact.appendChild(factText)
-     item.appendChild(weight)
-     item.appendChild(height)
-     item.appendChild(diet)
-     item.appendChild(whenWhere)
      item.appendChild(fact)
+
+
 
  }
 
@@ -271,11 +271,32 @@ let defaultValues = (function() {
 //@description: used to set form with default values
 // On button click, prepare and display infographic
 // Remove form from screen
- function showGrid() {
-     document.getElementById("section-form-dino").hidden = true;
-     document.getElementById("section-main-dino").hidden = false;
+ defaultFormValues();
+ document.addEventListener('DOMContentLoaded', init, false);
+ function init() {
+     function showGrid() {
+         document.getElementById("section-form-dino").hidden = true;
+         document.getElementById("section-main-dino").hidden = false;
 
-     human.extractHumanData();
-     human.fillHumanBox();
-     extractDrawJsonData();
- }
+         human.extractHumanData();
+         human.fillHumanBox();
+         extractDrawJsonData();
+
+     };
+
+     let button = document.getElementById('btn');
+     button.addEventListener('click', showGrid, false);
+
+     function showForm() {
+         document.getElementById("section-form-dino").hidden = false;
+         document.getElementById("section-main-dino").hidden = true;
+         defaultFormValues();
+         cleanFormValues();
+     };
+
+     let buttonBack = document.getElementById('btn2');
+     buttonBack.addEventListener('click', showForm, false);
+
+ };
+
+
