@@ -6,11 +6,6 @@
  function Height(f,i) {
      this.feet = f;
      this.inches = i;
-
-     return {
-         feet: this.feet,
-         inches: this.inches
-     }
  }
 
 //** @description Represents an Individual
@@ -22,11 +17,6 @@ function Individual(w,f,i,d) {
      this.height.feet = f
      this.weight = w
      this.diet = d
-     return {
-         weight: this.weight,
-         height: this.height,
-         diet: this.diet
-     }
  }
 //** @description Represents the History of a particular Individual
 /*   @constructor: Class History
@@ -35,11 +25,6 @@ function Individual(w,f,i,d) {
      this.when;
      this.where;
      this.fact;
-     return {
-         when: this.when,
-         where: this.where,
-         fact: this.fact
-     }
  }
 
 // Class Dino
@@ -52,15 +37,6 @@ function Individual(w,f,i,d) {
      this.diet = diet
 
      return Object.assign({}, Individual, History, {
-         species: this.species,
-         image: this.image,
-         weight: this.weight,
-         height: new Height(feet, inches),
-         diet: this.diet,
-         when: when,
-         where: where,
-         fact: fact
-
      })
 
  }
