@@ -12,6 +12,7 @@
     <link href="app.css" rel="stylesheet">
     <!-- Link to app.js with defer till HTML render -->
     <script defer src="app.js"></script>
+
 </head>
 <body>
     <header>
@@ -20,6 +21,7 @@
         <h3>How do you compare?</h3>
     </header>
     <!-- Form to get user input -->
+<section id="section-form-dino">
     <form id="dino-compare">
         <div class="form-container">
             <p>Name:</p>
@@ -35,11 +37,29 @@
                 <option>Omnivor</option>
                 <option>Carnivor</option>
             </select>
-            <div id="btn">Compare Me!</div>
+            <button id="btn" onclick="showGrid(); return false;">Compare Me!</button>
         </div>
     </form>
+</section>
+
+
+
+
     <!-- .grid to attach tiles to -->
-    <main id="grid"></main>
+    <section id="section-main-dino" hidden>
+    <main id="grid">
+        <div id="0-dino" class="grid-item"></div>
+        <div id="1-dino" class="grid-item"></div>
+        <div id="2-dino" class="grid-item"></div>
+        <div id="3-dino" class="grid-item"></div>
+        <div id="human-item" class="grid-item"></div>
+        <div id="4-dino" class="grid-item"></div>
+        <div id="5-dino" class="grid-item"></div>
+        <div id="6-dino" class="grid-item"></div>
+        <div id="7-dino" class="grid-item"></div>
+
+    </main>
+    </section>
     <footer>
         <!-- Include information source -->
         <p class="fine-print">Data Sourced from <a href="https://www.wikipedia.org/">Wikipedia.org</a>, all numbers are approximations.</p>

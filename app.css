@@ -45,6 +45,7 @@ p {
     flex-wrap: wrap;
 }
 
+
 .grid-item {
     position: relative;
     box-sizing: border-box;
